@@ -1,0 +1,110 @@
+terraform init
+terraform fmt
+terraform validate
+terraform plan
+terraform apply
+
+
+provider "aws" {
+  region     = "us-east-1"
+  access_key = "PROGRAMMATIC_KEY"
+  secret_key = "PROGRAMMATIC_KEY"
+
+}
+
+
+
+#security group using terraform
+
+resource "aws_security_group" "GIVE.A.NAME" {
+  name        = "GIVE.A.NAME"
+  description = "securITY terraform"
+  vpc_id      = "vpc-022e5d9ea36fcb5d1"
+
+
+  ingress {
+    description      = "HTTPS"
+    from_port        = 443
+    to_port          = 443
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+
+  ingress {
+    description      = "HTTP"
+    from_port        = 8080
+    to_port          = 8080
+[ec2-user@ip-172-31-51-122 terraform3]$ cat main.tf 
+provider "aws" {
+  region     = "us-east-1"
+  access_key = "0000000000000"
+  secret_key = "0000000000000"
+
+}
+
+
+
+#security group using terraform
+
+resource "aws_security_group" "TF_SG1" {
+  name        = "terraform_SGs"
+  description = "securITY terraform"
+  vpc_id      = "vpc-022e5d9ea36fcb5d1"
+
+
+  ingress {
+    description      = "HTTPS"
+    from_port        = 443
+    to_port          = 443
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+
+  ingress {
+    description      = "HTTP"
+    from_port        = 8080
+    to_port          = 8080
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  ingress {
+    description      = "SSH"
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"+
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  tags = {
+    Name = "GIVE A NAME"
+  }
+}
+
+
+
+
+#resource for aws_instance
+
+resource "aws_instance" "web" {
+  ami             = "ami-0557a15b87f6559cf"
+  instance_type   = "t2.micro"
+  vpc_security_group_ids = ["sg-065d8c1130472fba0"]
+  tags = {
+    Name = "Terrafrom"
+  }
+
+}
